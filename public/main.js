@@ -1,4 +1,5 @@
 const apiUrl = "/api/chat";
+const messageHistory = [];
 
 async function sendMessage() {
     console.log("Button clicked!");
@@ -11,11 +12,13 @@ async function sendMessage() {
         { role: "user", content: userInput }
     ];
 
+    messageHistory.push(...messagePayload);
+    
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: messagePayload }),
+            body: JSON.stringify({ messages: messageHistory }),
         });
 
         if (!response.ok) {
