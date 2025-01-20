@@ -1,6 +1,5 @@
 // JavaScript implementation of the Pyscript functionality
 
-const apiKey = "";
 const apiUrl = "/api/chat";
 
 let messages = [];
