@@ -104,4 +104,5 @@ function updateChatLog(userInput, reply) {
 }
 
 startMessage();
+imageMessage();
 document.getElementById("submit-guess-btn").addEventListener("click", sendMessage);
