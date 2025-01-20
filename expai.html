@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Requify Prototype</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- UI -->
+    <div id="div1" class="container">
+        <div class="section">
+            <img style="vertical-align:middle;margin:-50px 0px; float:left" src="Requifylogo.png" width="150" height="150"> </img> 
+            <h4 style="margin: 0px 15px" class="title is-4">
+                Willkommen bei Requify!
+            </h4>
+
+            <div class="container">
+                <div class="image">
+                  <img style="vertical-align:middle;margin:0px 0px; float:left; height:300px; width:300px" src="requifyexperimentgrafik.png">
+                </div>
+                <div style="margin: 50px 0px" class="text">
+                  <p>Schauen Sie sich die Abbildung genau an. Analysieren Sie deren Bestandteile, Merkmale und mögliche Funktionen.
+                    <br>Beschreiben Sie die Abbildung, indem Sie Anforderungen formulieren, welche später umgesetzt werden sollen.
+                    Eine Anforderung ist ein klarer, überprüfbarer Satz, der beschreibt, was ein System oder Produkt leisten soll oder welche Eigenschaften es haben soll.
+                  </p>
+                </div>
+            </div>
+
+            <textarea
+                style="flex-direction: column-reverse"
+                id="chatLog"
+                overflow="auto"
+                class="textarea"
+                readonly
+                rows="10"
+            ></textarea>
+            
+            <textarea
+                id="userInput"
+                overflow="auto"
+                class="textarea"
+                placeholder="Nachricht eingeben"
+                rows="4"
+            ></textarea>
+            
+            <button  id="submit-guess-btn"
+                        class="button is-primary mt-3"
+                        type="submit">Send</button>
+                        
+            <button  id="download"
+                        class="button is-primary mt-3"
+                        type="submit">Create CSV</button>
+
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
