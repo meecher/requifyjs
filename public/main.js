@@ -38,3 +38,5 @@ function updateChatLog(userInput, reply) {
     chatLog.value += `User: ${userInput}\nAssistant: ${reply}\n\n`;
     chatLog.scrollTop = chatLog.scrollHeight;
 }
+
+document.getElementById("submit-guess-btn").addEventListener("click", sendMessage);
