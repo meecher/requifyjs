@@ -26,6 +26,7 @@ async function sendMessage() {
         const reply = responseData.choices[0].message.content; // Extracting the assistant's reply
 
         updateChatLog(userInput, reply); // Update the chat log with the user's input and assistant's response
+    console.log(responseData)
     } catch (error) {
         console.error("Error:", error);
     }
