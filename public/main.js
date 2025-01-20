@@ -1,12 +1,3 @@
-// JavaScript implementation of the Pyscript functionality
-
-const apiUrl = "/api/chat";
-
-let messages = [];
-let dataCollect = [];
-let startTime = new Date();
-
-// Function to send a message and get a response
 const apiUrl = "/api/chat";
 
 async function sendMessage() {
@@ -27,44 +18,22 @@ async function sendMessage() {
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Error:", errorText);
+            console.error("API Error:", await response.text());
             return;
         }
 
         const responseData = await response.json();
-        const reply = responseData.choices[0].message.content;
-        dataCollect.push({ role: "user", content: userInput, time: new Date() - startTime });
-        dataCollect.push({ role: "assistant", content: reply, time: new Date() - startTime });
+        const reply = responseData.choices[0].message.content; // Extracting the assistant's reply
 
-        updateChatLog(userInput, reply);
+        updateChatLog(userInput, reply); // Update the chat log with the user's input and assistant's response
     } catch (error) {
         console.error("Error:", error);
     }
 }
 
-
-// Update the chat log in the UI
+// Function to update the chat log in the UI
 function updateChatLog(userInput, reply) {
     const chatLog = document.getElementById("chatLog");
-    chatLog.value += `Benutzer: ${userInput}\nAssistent: ${reply}\n\n`;
+    chatLog.value += `User: ${userInput}\nAssistant: ${reply}\n\n`;
     chatLog.scrollTop = chatLog.scrollHeight;
 }
-
-// Create and download a CSV file from dataCollect
-function downloadFile() {
-    const csvContent = dataCollect.map(e => `${e.role};${e.content};${e.time}`).join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", "data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-// Attach event listeners to buttons
-document.getElementById("submit-guess-btn").addEventListener("click", sendMessage);
-document.getElementById("download").addEventListener("click", downloadFile);
