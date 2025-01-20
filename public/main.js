@@ -1,7 +1,7 @@
 // JavaScript implementation of the Pyscript functionality
 
 const apiKey = "";
-const apiUrl = "https://api.openai.com/v1/chat/completions";
+const apiUrl = "/api/chat";
 
 let messages = [];
 let dataCollect = [];
