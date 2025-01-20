@@ -11,6 +11,8 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+let messageHistory = [];
+
 // Proxy endpoint for OpenAI API
 app.post("/api/chat", async (req, res) => {
     const { messages } = req.body; // Extract messages from the request body
@@ -23,7 +25,8 @@ app.post("/api/chat", async (req, res) => {
             },
         });
     }
-
+    messageHistory.push(...messages);
+    
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -33,7 +36,7 @@ app.post("/api/chat", async (req, res) => {
             },
             body: JSON.stringify({
                 model: "gpt-4o-mini",
-                messages: messages,
+                messages: messageHistory,
             }),
         });
 
