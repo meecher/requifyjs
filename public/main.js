@@ -65,11 +65,7 @@ async function imageMessage() {
         {
         "role": "user", "content": [
         {"type": "text", "text": "Erstelle möglichst genaue Anforderungen anhand des Bildes."},
-        {"type": "image_url", "image_url": {
-          "url": "https://i.ibb.co/rk0GB3G/requifyexperimentgrafik.png",},
-        },
-        ],
-        }
+        {"type": "image_url", "image_url": {"url": "https://i.ibb.co/rk0GB3G/requifyexperimentgrafik.png"}}]}
 
     try {
         const response = await fetch(apiUrl, {
