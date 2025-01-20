@@ -1,6 +1,7 @@
 const apiUrl = "/api/chat";
 
 async function sendMessage() {
+    console.log("Button clicked!");
     const userInput = document.getElementById("userInput").value;
     document.getElementById("userInput").value = "";
 
