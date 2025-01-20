@@ -33,7 +33,7 @@ async function sendMessage() {
     }
 }
 
-function startMessage() {
+async function startMessage() {
     const messagePayload = [
         { role: "system", content:"Requirements Engineer welcher bei der Erstellung von Anforderungen unterstützt. Der Kontext ist ein Experiment. In diesem Experiment wird ein Bild von einem Haus gezeigt, welches mit den Anforderungen sehr präzise beschrieben werden soll. Anhand dieser Anforderungen soll es später möglich sein das Haus möglichst genau erneuet zu zeichnen. Es ist wichtig dass ein Mensch nur mit diesen Anforderungen das Bild 1:1 nachzeichnen kann. Gebe dafür die Anforderungen in Deutsch im folgenden Format in jedem Schritt an: Anforderungen [1., 2., ...]"}
     ];
@@ -60,7 +60,7 @@ function startMessage() {
     }
 }
 
-function imageMessage() {
+async function imageMessage() {
     const messagePayload = [
         {
         "role": "user", "content": [
