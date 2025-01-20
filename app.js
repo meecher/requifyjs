@@ -13,9 +13,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Proxy endpoint for OpenAI API
 app.post("/api/chat", async (req, res) => {
-    const { messages } = req.body;
-    console.log("Received messages:", messages); // Debugging input
-    
+    const { messages } = req.body; // Extract messages from the request body
+
+    if (!messages) {
+        console.error("Missing 'messages' in request body");
+        return res.status(400).json({
+            error: {
+                message: "Missing required parameter: 'messages'.",
+            },
+        });
+    }
+
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -23,23 +31,26 @@ app.post("/api/chat", async (req, res) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
             },
-            body: JSON.stringify({ model: "gpt-4", messages: messages }),
+            body: JSON.stringify({
+                model: "gpt-4",
+                messages: messages,
+            }),
         });
 
         if (!response.ok) {
-            const errorDetails = await response.text();
-            console.error("OpenAI API error:", errorDetails);
-            return res.status(response.status).send(errorDetails);
+            const errorDetails = await response.json();
+            console.error("OpenAI API Error:", errorDetails);
+            return res.status(response.status).json(errorDetails);
         }
 
         const data = await response.json();
-        console.log("OpenAI API response:", data); // Debugging output
         res.json(data);
     } catch (error) {
-        console.error("Error communicating with OpenAI API:", error);
-        res.status(500).send("Internal Server Error");
+        console.error("Server Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 
 // Start the server
