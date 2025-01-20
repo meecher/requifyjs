@@ -8,37 +8,42 @@ let dataCollect = [];
 let startTime = new Date();
 
 // Function to send a message and get a response
+const apiUrl = "/api/chat";
+
 async function sendMessage() {
     const userInput = document.getElementById("userInput").value;
     document.getElementById("userInput").value = "";
 
-    if (messages.length === 0) {
-        messages.push({
-            role: "system",
-            content: "Requirements Engineer welcher bei der Erstellung von Anforderungen unterstützt. Der Kontext ist ein Experiment. ..."
+    if (!userInput) return;
+
+    const messagePayload = [
+        { role: "user", content: userInput }
+    ];
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: messagePayload }),
         });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Error:", errorText);
+            return;
+        }
+
+        const responseData = await response.json();
+        const reply = responseData.choices[0].message.content;
+        dataCollect.push({ role: "user", content: userInput, time: new Date() - startTime });
+        dataCollect.push({ role: "assistant", content: reply, time: new Date() - startTime });
+
+        updateChatLog(userInput, reply);
+    } catch (error) {
+        console.error("Error:", error);
     }
-
-    messages.push({ role: "user", content: userInput });
-
-    const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({ model: "gpt-4", messages: messages }),
-    });
-
-    const responseData = await response.json();
-    const reply = responseData.choices[0].message.content;
-
-    messages.push({ role: "assistant", content: reply });
-
-    updateChatLog(userInput, reply);
-    dataCollect.push({ role: "user", content: userInput, time: new Date() - startTime });
-    dataCollect.push({ role: "assistant", content: reply, time: new Date() - startTime });
 }
+
 
 // Update the chat log in the UI
 function updateChatLog(userInput, reply) {
